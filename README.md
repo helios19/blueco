@@ -1,6 +1,8 @@
 Setup Instructions
 --
 
+**Fat-Jar**
+
 The microservice article-service has been implemented using gradle wrapper. Hence, to build it, simply run the following command
 in a terminal, at the root of the source folder to generate the runnable fat jar:
 
@@ -27,6 +29,29 @@ The endpoints will be available at the following URLs:
 - POST http://localhost:8080/articles
 - GET http://localhost:8080/articles/{id}
 - GET http://localhost:8080/tags/{tagName}/{date}
+
+
+**Docker**
+
+
+Another option to run this application would consist in packaging it as container
+and run it through a Docker installation. Please note this approach will require you
+to download and install Docker (refer to the official online documentation for this).
+
+When Docker has been installed on your machine, just run the following gradle task
+to generate the docker image:
+
+./gradlew buildDocker
+
+Then, after a few minutes, if the task run successfully, you should be able to see the application docker image
+created in the local docker registry with the following name: "ffx-blue/article-service".
+
+To run the application, just type in a terminal the following docker command:
+
+docker run ffx-blue/article-service
+
+
+
 
 
 Requirement assumptions
