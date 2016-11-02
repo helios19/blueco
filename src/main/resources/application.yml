@@ -1,7 +1,17 @@
 spring:
   profiles.active: default
 ---
-server.port: 8080
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types:
+      - application/json
+      - application/xml
+      - application/xhtml+xml
+      - text/html
+      - text/xml
+      - text/plain
 spring:
   profiles: default
   application:
