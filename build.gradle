@@ -71,6 +71,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.boot:spring-boot-starter-cache")
+    compile("org.springframework.boot:spring-boot-starter-security")
 
     // spring cloud
     compile 'org.springframework.cloud:spring-cloud-starter-hystrix'
@@ -99,7 +100,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
 
     // owasp
-    compile("org.owasp.esapi:esapi:2.0.1")
+    compile "org.owasp.esapi:esapi:2.0.1"
 
     // unit testing
     testCompile 'org.slf4j:jcl-over-slf4j:1.7.12'
@@ -108,6 +109,8 @@ dependencies {
     testCompile("com.jayway.jsonpath:json-path-assert")
     testCompile "com.jayway.restassured:spring-mock-mvc:${restAssuredVersion}"
     testCompile("junit:junit:${junitVersion}")
+
+    //compileOnly 'org.mortbay.jetty.alpn:alpn-boot:8.1.8.v20160420'
 }
 
 bootRun {
@@ -133,4 +136,9 @@ task buildDocker(type: Docker, dependsOn: build) {
             into stageDir
         }
     }
+}
+
+bootRun {
+//    systemProperties = System.properties
+//    jvmArgs = "-Xbootclasspath/p:build/libs/alpn-boot-8.1.6.v20151105.jar"
 }
