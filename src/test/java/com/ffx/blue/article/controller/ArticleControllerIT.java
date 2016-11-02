@@ -123,6 +123,7 @@ public class ArticleControllerIT {
 		this.mockMvc.perform(post("/articles")
 				.contentType(contentType)
 				.content(articleJson))
+				.andDo(print())
 				.andExpect(status().isCreated());
 
 		// verify article record has been saved
