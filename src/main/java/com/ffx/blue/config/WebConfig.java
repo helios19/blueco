@@ -3,8 +3,11 @@ package com.ffx.blue.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.ffx.blue.common.security.RateLimiterFilter;
 import com.ffx.blue.common.security.XssFilter;
+import io.undertow.UndertowOptions;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -56,6 +59,29 @@ public class WebConfig {
         registrationBean.setFilter(xssFilter);
         registrationBean.setOrder(1);
         return registrationBean;
+    }
+
+    /**
+     * Return an {@link FilterRegistrationBean} instance wrapping a {@link RateLimiterFilter} filter
+     * to be loaded by the spring context.
+     *
+     * @return FilterRegistrationBean instance
+     */
+    @Bean
+    public FilterRegistrationBean rateLimiterRegistrationBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        RateLimiterFilter limiterFilter = new RateLimiterFilter();
+        registrationBean.setFilter(limiterFilter);
+        registrationBean.setOrder(1);
+        return registrationBean;
+    }
+
+    @Bean
+    public UndertowEmbeddedServletContainerFactory embeddedServletContainerFactory() {
+        UndertowEmbeddedServletContainerFactory factory = new UndertowEmbeddedServletContainerFactory();
+        factory.addBuilderCustomizers(
+                builder -> builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
+        return factory;
     }
 
     /**
